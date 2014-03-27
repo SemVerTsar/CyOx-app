@@ -1,0 +1,8 @@
+@-webkit-keyframes spinclock {from {-webkit-transform: rotate(-360deg);}  to {-webkit-transform: rotate(360deg);}}
+
+.spinclock {
+  width: 150px;
+  height: 150px;
+  -webkit-animation: spinclock 600s linear;
+  -webkit-animation-iteration-count: infinite;
+}
