@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="static/animation.css">
 
   <script src="static/angular.js"></script>
+  <script src="static/mylocal.js"></script>
 
   <title>CyOx</title>
 
@@ -18,13 +19,17 @@
     <fieldset>
       <div class="center top-margin-30">
         <label>Start Point:</label>
-        <input type="text" ng-model="startpoint" name="start_point" placeholder="Please enter a starting point">
+        <input type="text" ng-model="startpoint" id="start_point" name="start_point" placeholder="Please enter a starting point">
+      </div>
+
+      <div class="center top-margin-30">
+        <input type="checkbox" id="box" onclick="startpoint()">
       </div>
 
       <div class="center top-margin-30">
         <label>End Point:</label>
         <span class="nineteen">
-          <input type="text" ng-model="endpoint" name="end_point" placeholder="Please enter a ending point">
+          <input type="text" ng-model="endpoint" id="end_point" name="end_point" placeholder="Please enter a ending point">
         </span>
       </div>
 
