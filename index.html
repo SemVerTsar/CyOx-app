@@ -1,22 +1,92 @@
 <!doctype html>
-<html ng-app>
+<html ng-app="cyox">
 <head>
+  <meta charset="UTF-8">
 
   <link rel="stylesheet" href="static/style.css">
   <link rel="stylesheet" href="static/animation.css">
 
+  <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+  <script src="static/underscore-min.js"></script>
   <script src="static/angular.js"></script>
+  <script src="static/angular-google-maps.min.js"></script>
+  <script src="static/app.js"></script>
 
   <title>CyOx</title>
 
 </head>
-<body>
+<body ng-controller="cyoxController">
 
-  <h1 class="center">Cy<img class="spinclock" src="static/media/ring.png">x</h1>
+  <h1 class="center">Cy<img class="spinclock {{state}}" src="static/media/ring.png">x</h1>
 
-  <h2 class="center"><a href="map.html">View Map</a></h2>
-  <h2 class="center"><a href="plan.html">Plan Route</a></h2>
+  <nav ng-if="state != 'spinner'">
+    <ul>
+      <li class="button-outline" ng-click="change_state('map')">View Map</li>
+      <li class="button-outline" ng-click="change_state('input')">Plan Route</li>
+      <li class="button-outline" ng-click="get_history()">View Old Routes</li>
+    </ul>
+  </nav>
 
-  <p class="center bottom">This is an accademic project for Oxford Brookes University by Philip Gardner 10070312. This project is not for profit.</p>
+  <form ng-submit="get_route()" ng-if="state == 'input'" class="center">
+    <p class="button-outline form-button" ng-if="geo" ng-click="use_geo()">Use Current Location</p>
+    <span ng-if="route_errors.non_field_errors">{{route_errors.non_field_errors.0}}</span>
+    <input type="text" ng-model="data.start_point" id="start_point" name="start_point" placeholder="Please enter a starting point" required>
+    <span ng-if="route_errors.start_point">{{route_errors.start_point.0}}</span>
+    <input type="text" ng-model="data.end_point" id="end_point" name="end_point" placeholder="Please enter a ending point" required>
+    <span ng-if="route_errors.end_point">{{route_errors.end_point.0}}</span>
+    <button class="button-outline form-button" type="submit">Calculate Route</button>
+  </form>
+
+  <div ng-if="state == 'map'">
+    <google-map center="map.center" zoom="map.zoom"></google-map>
+  </div>
+
+  <div ng-if="state == 'route'">
+    <h2>{{route_summary.name}}</h2>
+    <google-map center="map.center" zoom="map.zoom">
+      <polyline ng-repeat="point in route_points" path='point.points' stroke='point'></polyline>
+    </google-map>
+    <table>
+      <thead>
+        <tr>
+          <th>Street</th>
+          <th>Distance</th>
+          <th>Turn</th>
+          <th>Surface</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="point in route_points">
+          <td>{{point.name}}</td>
+          <td>{{point.distance}}M</td>
+          <td>{{point.turn}}</td>
+          <td>{{point.provisionName}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div ng-if="state == 'history'">
+    <table>
+      <thead>
+        <tr>
+          <th>Start</th>
+          <th>End</th>
+          <th>Time</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="his in history">
+          <td>{{his.start_point}}</td>
+          <td>{{his.end_point}}</td>
+          <td>{{his.request_made}}</td>
+          <td><button class="button-outline" ng-click="caculate_route(his.start_point, his.end_point)">View route</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer class="center">This is an accademic project for Oxford Brookes University by Philip Gardner 10070312. This project is not for profit.</footer>
 </body>
 </html>

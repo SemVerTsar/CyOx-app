@@ -6,3 +6,8 @@
   -webkit-animation: spinclock 600s linear;
   -webkit-animation-iteration-count: infinite;
 }
+@-webkit-keyframes spinclockfast {from {-webkit-transform: rotate(-360deg);}  to {-webkit-transform: rotate(360deg);}}
+.spinclock.spinner {
+  -webkit-animation: spinclockfast 6s linear;
+  -webkit-animation-iteration-count: infinite;
+}
