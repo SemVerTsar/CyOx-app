@@ -59,11 +59,12 @@ app.controller('cyoxController', function($scope, $http) {
   };
 
   $scope.use_geo = function(){
-    navigator.geolocation.getCurrentPosition(function(position){
+    navigator.geolocation.getCurrentPosition(onSuccess);
+    function onSuccess(position) {
       var longitude = position.coords.longitude;
       var latitude = position.coords.latitude;
       $scope.data.start_point = latitude + ',' + longitude;
-    })
+    }
   };
 
 });
