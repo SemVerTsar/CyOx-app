@@ -18,8 +18,16 @@
 
     <icon src="icon.png" />
 
+
     <feature name="Geolocation">
         <param name="ios-package" value="CDVLocation" />
         <param name="android-package" value="org.apache.cordova.geolocation.GeoBroker" />
     </feature>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android:ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android:ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android:ACCESS_LOCATION_EXTRA_COMMANDS," />
+
 </widget>
